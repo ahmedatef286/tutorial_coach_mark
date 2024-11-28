@@ -124,8 +124,6 @@ abstract class AnimatedFocusLightState extends State<AnimatedFocusLight>
     bool targetTap = false,
     bool overlayTap = false,
   }) async {
-
-
     nextIndex++;
     if (targetTap) {
       await widget.clickTarget?.call(_targetFocus);
@@ -290,6 +288,8 @@ class AnimatedStaticFocusLightState extends AnimatedFocusLightState {
     return (_targetPosition?.size.height ?? 0) + _getPaddingFocus() * 4;
   }
 
+  bool _canClick = true;
+
   @override
   Widget build(BuildContext context) {
     return Semantics(
@@ -298,7 +298,18 @@ class AnimatedStaticFocusLightState extends AnimatedFocusLightState {
       child: InkWell(
         excludeFromSemantics: true,
         onTap: _targetFocus.enableOverlayTab
-            ? () => _tapHandler(overlayTap: true)
+            ? () {
+                if (_canClick) {
+                  _canClick = false;
+                  _tapHandler(targetTap: true);
+                  Future.delayed(
+                    Duration(milliseconds: 1750),
+                    () {
+                      _canClick = true;
+                    },
+                  );
+                }
+              }
             : null,
         child: AnimatedBuilder(
           animation: _controller,
@@ -314,7 +325,18 @@ class AnimatedStaticFocusLightState extends AnimatedFocusLightState {
                     borderRadius: _betBorderRadiusTarget(),
                     onTapDown: _tapHandlerForPosition,
                     onTap: _targetFocus.enableTargetTab
-                        ? () => _tapHandler(targetTap: true)
+                        ? () {
+                            if (_canClick) {
+                              _canClick = false;
+                              _tapHandler(targetTap: true);
+                              Future.delayed(
+                                Duration(milliseconds: 1750),
+                                () {
+                                  _canClick = true;
+                                },
+                              );
+                            }
+                          }
 
                         /// Essential for collecting [TapDownDetails]. Do not make [null]
                         : () {},
@@ -361,6 +383,7 @@ class AnimatedPulseFocusLightState extends AnimatedFocusLightState {
 
   bool _finishFocus = false;
   bool _initReverse = false;
+  bool _canClick = true;
 
   get left => (_targetPosition?.offset.dx ?? 0) - _getPaddingFocus() * 2;
 
@@ -395,7 +418,18 @@ class AnimatedPulseFocusLightState extends AnimatedFocusLightState {
       child: InkWell(
         excludeFromSemantics: true,
         onTap: _targetFocus.enableOverlayTab
-            ? () => _tapHandler(overlayTap: true)
+            ? () {
+                if (_canClick) {
+                  _canClick = false;
+                  _tapHandler(overlayTap: true);
+                  Future.delayed(
+                    Duration(milliseconds: 1750),
+                    () {
+                      _canClick = true;
+                    },
+                  );
+                }
+              }
             : null,
         child: AnimatedBuilder(
           animation: _controller,
@@ -416,7 +450,18 @@ class AnimatedPulseFocusLightState extends AnimatedFocusLightState {
                       child: InkWell(
                         borderRadius: _betBorderRadiusTarget(),
                         onTap: _targetFocus.enableTargetTab
-                            ? () => _tapHandler(targetTap: true)
+                            ? () {
+                                if (_canClick) {
+                                  _canClick = false;
+                                  _tapHandler(targetTap: true);
+                                  Future.delayed(
+                                    Duration(milliseconds: 1750),
+                                    () {
+                                      _canClick = true;
+                                    },
+                                  );
+                                }
+                              }
 
                             /// Essential for collecting [TapDownDetails]. Do not make [null]
                             : () {},
