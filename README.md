@@ -1,3 +1,6 @@
+# This fork adds a timed delay that prevents the inkwell of FocusTargets from accepting multiple taps within 2 seconds  
+This prevents an annoying situation were if a user double or multi taps a target it skips the tutorial steps that should proceed after it
+
 [![pub package](https://img.shields.io/pub/v/tutorial_coach_mark.svg)](https://pub.dartlang.org/packages/tutorial_coach_mark)
 [![buymeacoffee](https://i.imgur.com/aV6DDA7.png)](https://www.buymeacoffee.com/rafaelbarbosa)
 
