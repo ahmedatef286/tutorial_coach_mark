@@ -124,6 +124,8 @@ abstract class AnimatedFocusLightState extends State<AnimatedFocusLight>
     bool targetTap = false,
     bool overlayTap = false,
   }) async {
+        if (_controller.isAnimating) return;
+
     nextIndex++;
     if (targetTap) {
       await widget.clickTarget?.call(_targetFocus);
